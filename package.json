@@ -1,11 +1,11 @@
 {
-  "name": "liten",
+  "name": "liten-skruv",
   "version": "0.0.1",
   "description": "A small dom abstraction",
   "keywords": [],
   "bugs": {
     "url": "https://github.com/skruv/liten/issues",
-    "email": "skruv@richter.id"
+    "email": "liten.skruv@richter.id"
   },
   "repository": {
     "type": "git",
