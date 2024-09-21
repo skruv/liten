@@ -1,0 +1,21 @@
+{
+  "name": "liten",
+  "version": "0.0.1",
+  "description": "A small dom abstraction",
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/skruv/liten/issues",
+    "email": "skruv@richter.id"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skruv/liten.git"
+  },
+  "license": "MIT",
+  "author": "Svante Richter",
+  "type": "module",
+  "main": "index.js",
+  "bin": {},
+  "scripts": {},
+  "devDependencies": {}
+}
