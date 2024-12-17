@@ -1,6 +1,6 @@
 {
   "name": "@skruv/liten",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A small dom abstraction",
   "keywords": [],
   "bugs": {
@@ -11,8 +11,15 @@
     "type": "git",
     "url": "https://github.com/skruv/liten.git"
   },
+  "scripts": {
+    "build": "esbuild index.js --bundle --minify --sourcemap=external --format=esm --outfile=index.min.js && esbuild index.js --bundle --format=esm --outfile=index.nocomment.js",
+    "pre-release": "npm run build && gzip -9kf index.min.js && brotli -Zkf index.min.js && zstd -fk -19 index.min.js && du --apparent-size --bytes index.min.j* index.js index.nocomment.js | sort -h && rm -f index.min.js.gz index.min.js.br index.min.js.zst index.nocomment.js"
+  },
   "license": "MIT",
   "author": "Svante Richter",
   "type": "module",
-  "main": "index.js"
+  "main": "index.js",
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
 }
