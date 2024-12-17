@@ -29,7 +29,8 @@ About 0.5kb when compressed:
 2074    index.js (without comments)
 ```
 
-> [!TIP] For small apps it can be more efficient to inline the entire app in the html response to avoid a roundtrip and get better combined compression.
+> [!TIP]
+> For small apps it can be more efficient to inline the entire app in the html response to avoid a roundtrip and get better combined compression.
 
 ## Example
 
