@@ -1,8 +1,8 @@
-export const e = new Proxy({}, { get: (_, t) => (a = null, ...c) => ({ t, c, a }) })
+export const e = new Proxy({}, { get: (_, t) => (a = false, ...c) => ({ t, c, a }) })
 export const r = (object, current = document.documentElement) => {
   if (object.a) {
     for (const key in object.a) {
-      if (key === 'template' || key === 'opaque' || (key[0] === 'o' && key[1] === 'n' && current[key] === object.a[key]) || ('' + object.a[key]) === ('' + current.getAttribute(key))) continue
+      if ((key[0] === 'o' && key[1] === 'n' && current[key] === object.a[key]) || ('' + object.a[key]) === ('' + current.getAttribute(key))) continue
       if (key[0] === 'o' && key[1] === 'n') { // Event listener
         current[key] = object.a[key]
         continue
@@ -19,11 +19,42 @@ export const r = (object, current = document.documentElement) => {
   }
   if (current.hasChildNodes()) {
     if (!object.c.length) {
+      // Old children, no new children
       current.textContent = ''
-      return
+      return current
     }
+    // Both old and new children, diff
+    for (let i = 0; i < object.c.length; i++) {
+      const c = object.c[i]
+      const p = current.childNodes[i]
+      if (typeof c === 'string') {
+        if (!p) {
+          current.append(c)
+        } else if (p.nodeName !== '#text') {
+          p.replaceWith(c)
+        } else if (p.nodeValue !== c) {
+          p.nodeValue = c
+        }
+        continue
+      }
+      if (!p) {
+        current.append(r(c, document.createElement(c.t)))
+      } else if (p.localName !== c.t) {
+        p.replaceWith(r(c, document.createElement(c.t)))
+      } else {
+        r(c, p)
+      }
+    }
+    if (current.childNodes.length > object.c.length) {
+      const rg = document.createRange()
+      rg.setStartBefore(current.children[object.c.length])
+      rg.setEndAfter(current.lastElementChild)
+      rg.deleteContents()
+    }
+  } else if (!object.c.length) {
+    // No old children, no new children
   } else {
-    if (!object.c.length) return
+    // No old children, new children
     const newChildren = []
     for (let i = 0; i < object.c.length; i++) {
       const c = object.c[i]
@@ -31,37 +62,9 @@ export const r = (object, current = document.documentElement) => {
         newChildren.push(c)
         continue
       }
-      const _current = c.a && c.a.template ? c.a.template.cloneNode(true) : document.createElement(c.t)
-      newChildren.push(_current)
-      r(c, _current)
+      newChildren.push(r(c, document.createElement(c.t)))
     }
-    current.replaceChildren(...newChildren)
-    return
+    current.append(...newChildren)
   }
-  for (let i = 0; i < object.c.length; i++) {
-    const c = object.c[i]
-    let p = current.childNodes[i]
-    let _current = p
-    if (typeof c === 'string') {
-      if (!p || p.nodeName !== '#text') {
-        _current = document.createTextNode(c)
-        p ? current.replaceChild(_current, p) : current.appendChild(_current)
-      } else if (p.nodeValue !== c) {
-        p.nodeValue = c
-      }
-      continue
-    }
-    if (c.a && c.a.opaque && p) continue
-    if (!p || p.localName !== c.t) {
-      _current = c.a && c.a.template ? c.a.template.cloneNode(true) : document.createElement(c.t)
-      p ? current.replaceChild(_current, p) : current.appendChild(_current)
-    }
-    r(c, _current)
-  }
-  if (current.childNodes.length > object.c.length) {
-    const rg = document.createRange()
-    rg.setStartBefore(current.children[object.c.length])
-    rg.setEndAfter(current.lastElementChild)
-    rg.deleteContents()
-  }
+  return current
 }
