@@ -1,6 +1,6 @@
 ![skruv](./icon.svg)
 
-# liten-skruv
+# @skruv/liten
 
 Small DOM abstraction with element reuse.
 
@@ -35,7 +35,8 @@ About 0.5kb when compressed:
 ## Example
 
 ```js
-import { r, e } from 'liten-skruv'
+import { r, e } from '@skruv/liten'
+// Or `import { r, e } from 'https://unpkg.com/@skruv/liten/index.js'` if you don't want to install
 const { html, body, div, h1, hr, 'my-custom-element': myCustomElement, button } = e
 
 r(
@@ -57,4 +58,4 @@ r(
 
 ## Etymology
 
-"Liten skruv" means "small screw" in swedish. It is the smaller cousin of https://github.com/skruv/skruv.
+"Liten skruv" means "small screw" in swedish. It is the smaller cousin of <https://github.com/skruv/skruv>.
