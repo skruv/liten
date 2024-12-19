@@ -4,6 +4,10 @@
 
 Small DOM abstraction with element reuse.
 
+[Github](https://github.com/skruv/liten) • [NPM](https://www.npmjs.com/package/@skruv/liten)
+
+Installation: `npm i @skruv/liten`
+
 Exposes two exports:
 
 - `r(virtualElement, currentElement = document.documentElement)`: The main render function
